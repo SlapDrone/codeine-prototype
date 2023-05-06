@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "codeine"
+version = "0.1.0"
+description = "Interfacing github repositories with LLMs"
+authors = ["Liam Moore <liam@chiark.io>"]
+license = "GPLv3"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+llama-index = "*"
+langchain="*"
+faiss-gpu="*"
+pandas = "*"
+scikit-learn = "*"
+plotly = "*"
+matplotlib = "*"
+redis = {version = "*", extras = ["hiredis"]}
+pydantic = "*"
+python-dotenv = "*"
+jupyter = "*"
+tiktoken = "*"
+python-benedict = "*"
+streamlit = "*"
+nest-asyncio = "*"
+spacy = "*"
+tenacity = "*"
+SQLAlchemy-Utils = "*"
+arxiv = "^1.4.7"
+PyMuPDF = "^1.22.2"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
