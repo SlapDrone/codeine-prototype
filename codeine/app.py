@@ -1,52 +1,82 @@
-import openai
 import streamlit as st
-from streamlit_chat import message
+from streamlit.runtime.uploaded_file_manager import UploadedFile
 
-openai.api_key = st.secrets['api_secret']
-
-# This function uses the OpenAI Completion API to generate a 
-# response based on the given prompt. The temperature parameter controls 
-# the randomness of the generated response. A higher temperature will result 
-# in more random responses, 
-# while a lower temperature will result in more predictable responses.
-def generate_response(prompt):
-    completions = openai.Completion.create (
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=1024,
-        n=1,
-        stop=None,
-        temperature=0.5,
-    )
-
-    message = completions.choices[0].text
-    return message
+#import text_to_speech as tts
+from explainer import retrieve_code_explanation, retrieve_code_language
 
 
-st.title("🤖 chatBot : openAI GPT-3 + Streamlit")
+def display_header() -> None:
+    #st.image("img/logo.jpg")
+    st.title("Welcome to AI-rjan Code Explainer")
+    st.text("Just upload your code or copy and paste in the field below")
+    st.warning("Warning: uploaded files have precendence on copied and pasted code.")
 
 
-if 'generated' not in st.session_state:
-    st.session_state['generated'] = []
+def display_widgets() -> tuple[UploadedFile, str]:
+    file = st.file_uploader("Upload your script here.")
+    text = st.text_area("or copy and paste your code here (press Ctrl + Enter to send)")
 
-if 'past' not in st.session_state:
-    st.session_state['past'] = []
+    if not (text or file):
+        st.error("Bring your code with one of the options from above.")
 
-
-def get_text():
-    input_text = st.text_input("You: ","Hello, how are you?", key="input")
-    return input_text 
+    return file, text
 
 
-user_input = get_text()
+def retrieve_content_from_file(file: UploadedFile) -> str:
+    return file.getvalue().decode("utf8")
 
-if user_input:
-    output = generate_response(user_input)
-    st.session_state.past.append(user_input)
-    st.session_state.generated.append(output)
 
-if st.session_state['generated']:
+def extract_code() -> str:
+    uploaded_script, pasted_code = display_widgets()
 
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        message(st.session_state["generated"][i], key=str(i))
-        message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
+    if uploaded_script:
+        return retrieve_content_from_file(uploaded_script)
+    return pasted_code or ""
+
+
+# def choose_voice():
+#     voices = tts.list_available_names()
+#     return st.selectbox(
+#         "Could you please choose one of our available voices to explain?",
+#         voices,
+#     )
+
+
+def main() -> None:
+    display_header()
+
+    #selected_voice = choose_voice()
+
+    if code_to_explain := extract_code():
+        with st.spinner(text="Let me think for a while..."):
+            language = retrieve_code_language(code=code_to_explain)
+            explanation = retrieve_code_explanation(code=code_to_explain)
+
+        # with st.spinner(text="Give me a little bit more time, this code is complex..."):
+        #     tts.convert_text_to_mp3(
+        #         message=language, voice_name=selected_voice, mp3_filename="language.mp3"
+        #     )
+        # with st.spinner(
+        #     text=(
+        #         "I've got the language! "
+        #         "I'm thinking about how to explain to you in a few words now..."
+        #     )
+        # ):
+        #     tts.convert_text_to_mp3(
+        #         message=explanation,
+        #         voice_name=selected_voice,
+        #         mp3_filename="explanation.mp3",
+        #     )
+
+        st.success("Uhg, that was hard! But here is your explanation")
+        st.warning("Remember to turn on your audio!")
+
+        st.markdown(f"**Language:** {language}")
+        #st.audio("language.mp3")
+
+        st.markdown(f"**Explanation:** {explanation}")
+        #st.audio("explanation.mp3")
+
+
+if __name__ == "__main__":
+    main()
