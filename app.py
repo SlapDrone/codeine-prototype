@@ -13,11 +13,12 @@ logging.basicConfig(
 )
 
 # Import the chat_engine object
-from llama_index.chat_engine import SimpleChatEngine
-from langchain.chat_models import ChatOpenAI
-from llama_index import ServiceContext
-service_context = ServiceContext.from_defaults(llm=ChatOpenAI(temperature=0.))
-chat_engine = SimpleChatEngine.from_defaults(service_context=service_context)
+#from llama_index.chat_engine import SimpleChatEngine, ReActChatEngine
+#from langchain.chat_models import ChatOpenAI
+#from llama_index import ServiceContext
+#service_context = ServiceContext.from_defaults(llm=ChatOpenAI(temperature=0.))
+#chat_engine = SimpleChatEngine.from_defaults(service_context=service_context)
+from codeine.chatbot import chat_engine
 
 with open("assets/custom.css", "r", encoding="utf-8") as f:
     customCSS = f.read()
