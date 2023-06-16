@@ -1,38 +1,45 @@
 [tool.poetry]
 name = "codeine"
 version = "0.1.0"
-description = "Interfacing github repositories with LLMs"
-authors = ["Liam Moore <liam@chiark.io>"]
-license = "GPLv3"
+description = ""
+authors = ["SlapDrone <slap@drone.io>"]
+readme = "README.md"
+
+[tool.poe.tasks]
+track = "mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 0.0.0.0"
+track_old = "mlflow ui -h 0.0.0.0 -p 5000"                                
+jn = "jupyter-notebook --no-browser --allow-root --ip 0.0.0.0 --port 8888"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-llama-index = "*"
-langchain="*"
-faiss-gpu="*"
-pandas = "*"
-scikit-learn = "*"
-plotly = "*"
-matplotlib = "*"
-redis = {version = "*", extras = ["hiredis"]}
-pydantic = "*"
-python-dotenv = "*"
-jupyter = "*"
+python = "3.10.8"
+gradio = "*"
+mdtex2html = "*"
+pypinyin = "*"
 tiktoken = "*"
-python-benedict = "*"
-nest-asyncio = "*"
-spacy = "*"
-tenacity = "*"
-SQLAlchemy-Utils = "*"
-arxiv = "^1.4.7"
-PyMuPDF = "^1.22.2"
-tabulate = "*"
-pdf2image = "^1.16.3"
-
+socksio = "*"
+tqdm = "^4.65.0"
+colorama = "*"
+duckduckgo_search = "*"
+Pygments = "*"
+llama_index = "*"
+langchain = "*"
+markdown = "*"
+markdown2 = "*"
+SentencePiece = "*"
+pandas = "*"
+addict = "*"
+poethepoet = "^0.20.0"
+seaborn = "^0.12.2"
+python-dotenv = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "*"
+jupyter="*"
+seaborn="*"
+matplotlib="*"
+jupyterthemes="*"
+pytest="*"
+pylint="*"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
