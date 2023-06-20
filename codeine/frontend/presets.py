@@ -5,9 +5,9 @@ import gradio as gr
 title = """<h1 align="left" style="min-width:200px; margin-top:0;"> <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f432.svg" width="32px" style="display: inline"> Chat with Baize </h1>"""
 description_top = """\
 <div align="left">
-<p> Currently Running: <a href="https://huggingface.co/project-baize/baize-v2-7b">baize-v2-7b</a></p>
+<p> Currently Running: <a href="https://openai.com/gpt-4">GPT 4</a></p>
 <p>
-Disclaimer: The LLaMA model is a third-party version available on Hugging Face model hub. This demo should be used for research purposes only. Commercial use is strictly prohibited. The model output is not censored and the authors do not endorse the opinions in the generated content. Use at your own risk.
+Disclaimer: Costs money
 </p >
 </div>
 """
