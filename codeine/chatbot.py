@@ -23,7 +23,8 @@ from llama_index.readers.github_readers.github_api_client import GithubClient
 from llama_index.tools.query_engine import QueryEngineTool
 from llama_index.chat_engine import ReActChatEngine
 
-model = "gpt-3.5-turbo"#"gpt-4"
+model = "gpt-3.5-turbo"
+#model = "gpt-4"
 
 docs = None
 if os.path.exists("docs.pkl"):
@@ -42,12 +43,12 @@ if docs is None:
     )
 
     docs = loader.load_data(branch="main")
-    for d in docs:
-        print(d)
     with open("docs.pkl", "wb") as f:
         pickle.dump(docs, f)
 
 embeddings_storage = Path(f"./storage/codeine-prototype")
+import shutil
+shutil.rmtree(embeddings_storage)
 
 if embeddings_storage.exists():
     # load document/index/vector store from storage
