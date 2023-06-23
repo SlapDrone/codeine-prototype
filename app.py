@@ -18,7 +18,9 @@ logging.basicConfig(
 #from llama_index import ServiceContext
 #service_context = ServiceContext.from_defaults(llm=ChatOpenAI(temperature=0.))
 #chat_engine = SimpleChatEngine.from_defaults(service_context=service_context)
-from codeine.chatbot import chat_engine
+from codeine.chatbot import build_chat_engine
+
+chat_engine = build_chat_engine()
 
 with open("assets/custom.css", "r", encoding="utf-8") as f:
     customCSS = f.read()
